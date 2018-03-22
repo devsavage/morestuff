@@ -1,0 +1,30 @@
+# Creative Tab
+itemGroup.morestuff.creativeTab=More Stuff
+
+# Items
+item.morestuff:soulAxe.name=Soul Matter Axe
+item.morestuff:soulHoe.name=Soul Matter Hoe
+item.morestuff:soulPickaxe.name=Soul Matter Pickaxe
+item.morestuff:soulShovel.name=Soul Matter Shovel
+item.morestuff:soulSword.name=Soul Matter Sword
+item.morestuff:soulMatterRaw.name=Raw Soul Matter
+item.morestuff:soulMatter.name=Soul Matter
+item.morestuff:soulArmor.helmet.name=Soul Matter Helmet
+item.morestuff:soulArmor.chest.name=Soul Matter Chestplate
+item.morestuff:soulArmor.legs.name=Soul Matter Leggings
+item.morestuff:soulArmor.boots.name=Soul Matter Boots
+item.morestuff:infusionStone.name=Infusion Stone
+item.morestuff:emeraldRod.name=Emerald Rod
+
+# Blocks
+tile.morestuff:blockInfuser.name=Infuser
+
+# Container
+container.morestuff:blockInfuser=Infuser
+
+# Other
+info.morestuff.command.help=The command to help you out with other commands!
+info.morestuff.command.leveltool=Level up your soul tool.
+info.morestuff.command.leveltool.max=This tool is already at max level!
+info.morestuff.command.leveltool.hand=You need to have a soul tool in your hand first!
+info.morestuff.command.notFound=Unknown command. Try /mt help for a list of commands

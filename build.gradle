@@ -1,0 +1,64 @@
+buildscript {
+    repositories {
+        jcenter()
+        maven { url = "http://files.minecraftforge.net/maven" }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:2.2-SNAPSHOT'
+    }
+}
+apply plugin: 'net.minecraftforge.gradle.forge'
+
+
+version = "1.10.2-1.0.0"
+group= "io.savagedev.morestuff"
+archivesBaseName = "morestuff"
+
+sourceCompatibility = targetCompatibility = "1.8"
+compileJava {
+    sourceCompatibility = targetCompatibility = "1.8"
+}
+
+ext.configFile = file "build.properties"
+
+configFile.withReader {
+    def prop = new Properties()
+    prop.load(it)
+    project.ext.config = new ConfigSlurper().parse prop
+}
+
+minecraft {
+    version = config.minecraft_version + "-" + config.forge_version
+    runDir = "run"
+    mappings = "${config.mappings_version}"
+
+    replace '${version}', project.version
+    replaceIn "Reference.java"
+}
+
+dependencies {}
+
+processResources
+{
+    inputs.property "version", project.version
+    inputs.property "mcversion", config.minecraft_version
+
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'    
+        expand 'version':project.version, 'mcversion':config.minecraft_version
+    }
+        
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+}
+
+task coreJar(type: Jar) {
+    archiveName = "MoreStuff-${project.version}.jar"
+    dependsOn 'reobfJar'
+    classifier "core"
+}
+
+artifacts {
+    archives coreJar
+}

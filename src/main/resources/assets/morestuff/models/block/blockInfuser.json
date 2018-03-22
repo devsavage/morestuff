@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "top": "morestuff:blocks/blockInfuserTop",
+    "front": "morestuff:blocks/blockInfuserFront",
+    "side": "morestuff:blocks/blockInfuserSide"
+  }
+}

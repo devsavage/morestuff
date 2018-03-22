@@ -1,0 +1,16 @@
+[
+{
+  "modid": "morestuff",
+  "name": "MoreStuff",
+  "description": "A few more things.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["devsavage"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
