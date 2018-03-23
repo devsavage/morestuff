@@ -1,7 +1,7 @@
 package io.savagedev.morestuff.common.recipes;
 
 /*
- * InfusedStoneRecipe.java
+ * InfusedStoneShapelessRecipe.java
  * Copyright (C) 2018 Savage - github.com/devsavage
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -44,12 +44,12 @@ import javax.naming.Name;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InfusedStoneRecipe implements IRecipe
+public class InfusedStoneShapelessRecipe implements IRecipe
 {
     private List<ItemStack> recipeItems;
     private ItemStack resultItem;
 
-    public InfusedStoneRecipe(ItemStack output, List<ItemStack> recipeItems) {
+    public InfusedStoneShapelessRecipe(ItemStack output, List<ItemStack> recipeItems) {
         this.resultItem = output;
         this.recipeItems = recipeItems;
     }
