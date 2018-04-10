@@ -23,6 +23,9 @@ package io.savagedev.morestuff;
  * THE SOFTWARE.
  */
 
+import io.savagedev.morestuff.core.events.ExplosionEventListener;
+import io.savagedev.morestuff.core.events.MobDropsEventListener;
+import io.savagedev.morestuff.core.events.PlayerTickEventListener;
 import io.savagedev.morestuff.core.handler.*;
 import io.savagedev.morestuff.core.proxy.CommonProxy;
 import io.savagedev.morestuff.core.helpers.LogHelper;
@@ -59,7 +62,7 @@ public class MoreStuff
     public static CreativeTabs tabMoreStuff = new CreativeTabs(Reference.MOD_ID + ".creativeTab") {
         @Override
         public Item getTabIconItem() {
-            return ObjHandler.infusionStone;
+            return ObjHandler.soulMatter;
         }
     };
 
@@ -78,6 +81,10 @@ public class MoreStuff
         ObjHandler.registerTileEntities();
         ObjHandler.registerItems();
 
+        MinecraftForge.EVENT_BUS.register(new MobDropsEventListener());
+        MinecraftForge.EVENT_BUS.register(new ExplosionEventListener());
+        MinecraftForge.EVENT_BUS.register(new ExplosionEventListener());
+
         proxy.preInit();
 
         LogHelper.info("Pre-Initialization Complete");
@@ -92,13 +99,12 @@ public class MoreStuff
 
         RecipeHandler.init();
 
-        proxy.init();
-
         LogHelper.info("Initialization Complete");
     }
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
+        MinecraftForge.EVENT_BUS.register(new PlayerTickEventListener());
         LogHelper.info("Post-Initialization Complete");
     }
 

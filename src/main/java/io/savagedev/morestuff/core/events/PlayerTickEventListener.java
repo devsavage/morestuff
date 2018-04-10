@@ -1,7 +1,7 @@
-package io.savagedev.morestuff.core.proxy;
+package io.savagedev.morestuff.core.events;
 
 /*
- * ClientProxy.java
+ * PlayerTickEventListener.java
  * Copyright (C) 2018 Savage - github.com/devsavage
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,18 +23,13 @@ package io.savagedev.morestuff.core.proxy;
  * THE SOFTWARE.
  */
 
-import io.savagedev.morestuff.core.handler.ObjHandler;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
+import io.savagedev.morestuff.common.items.ItemSoulArmor;
+import io.savagedev.morestuff.core.helpers.LogHelper;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.gameevent.PlayerEvent;
+import net.minecraftforge.fml.common.gameevent.TickEvent;
 
-@SideOnly(Side.CLIENT)
-public class ClientProxy extends CommonProxy
+public class PlayerTickEventListener
 {
-    @Override
-    public void initRenderers() {
-        super.initRenderers();
-
-        ObjHandler.registerBlockModels();
-        ObjHandler.registerItemModels();
-    }
+    // FIX ARMOR BUG HERE
 }

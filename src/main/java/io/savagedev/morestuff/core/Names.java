@@ -39,6 +39,7 @@ public class Names
         public static final String soulMatter = "soulMatter";
         public static final String infusionStone = "infusionStone";
         public static final String emeraldRod = "emeraldRod";
+        public static final String magnet = "magnet";
     }
 
     public static final class Blocks {
@@ -71,5 +72,7 @@ public class Names
 
     public static final class Common {
         public static final String INFUSED = "Infused";
+        public static final String ACTIVE = "Active";
+        public static final String SOUND_TIMER = "SoundTimer";
     }
 }

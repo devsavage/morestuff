@@ -15,6 +15,7 @@ item.morestuff:soulArmor.legs.name=Soul Matter Leggings
 item.morestuff:soulArmor.boots.name=Soul Matter Boots
 item.morestuff:infusionStone.name=Infusion Stone
 item.morestuff:emeraldRod.name=Emerald Rod
+item.morestuff:magnet.name=Magnet
 
 # Blocks
 tile.morestuff:blockInfuser.name=Infuser

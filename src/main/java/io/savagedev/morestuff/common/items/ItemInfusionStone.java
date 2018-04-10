@@ -42,6 +42,8 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import javax.naming.Name;
@@ -90,6 +92,7 @@ public class ItemInfusionStone extends ItemMS
 
     @Nonnull
     @Override
+    @SideOnly(Side.CLIENT)
     public EnumRarity getRarity(ItemStack stack) {
         if(NBTHelper.getBoolean(stack, Names.Common.INFUSED)) {
             return EnumRarity.EPIC;

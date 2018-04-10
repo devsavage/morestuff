@@ -27,16 +27,7 @@ public class CommonProxy
 {
     public void preInit() {
         initRenderers();
-        initEventListeners();
-    }
-
-    public void init() {
-        initEventHandlers();
     }
 
     public void initRenderers() {}
-
-    public void initEventHandlers() {}
-
-    public void initEventListeners() {}
 }

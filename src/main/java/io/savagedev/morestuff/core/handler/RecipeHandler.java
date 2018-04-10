@@ -73,7 +73,6 @@ public class RecipeHandler
         GameRegistry.addRecipe(new ItemStack(ObjHandler.infusionStone), " E ", "EDE", " E ", 'E', Items.EMERALD, 'D', Items.DIAMOND);
         GameRegistry.addRecipe(new InfusedStoneShapelessRecipe(new ItemStack(ObjHandler.emeraldRod), new ArrayList<ItemStack>(){{add(new ItemStack(Items.STICK));}}));
         GameRegistry.addRecipe(shapedInfusionStoneRecipe(new ItemStack(ObjHandler.blockInfuser), "III", "ISI", "III", 'I', Blocks.IRON_BLOCK, 'S', ObjHandler.infusionStone));
-        LogHelper.info(shapedInfusionStoneRecipe(new ItemStack(ObjHandler.blockInfuser), "III", "ISI", "III", 'I', Blocks.IRON_BLOCK, 'S', ObjHandler.infusionStone).recipeItems);
     }
 
     private static InfusedStoneShapedRecipe shapedInfusionStoneRecipe(ItemStack stack, Object... recipeComponents) {

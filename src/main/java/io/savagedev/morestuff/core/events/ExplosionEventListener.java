@@ -1,7 +1,7 @@
-package io.savagedev.morestuff.core.handler;
+package io.savagedev.morestuff.core.events;
 
 /*
- * EventListener.java
+ * ExplosionEventListener.java
  * Copyright (C) 2018 Savage - github.com/devsavage
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,38 +23,13 @@ package io.savagedev.morestuff.core.handler;
  * THE SOFTWARE.
  */
 
-import io.savagedev.morestuff.core.helpers.LogHelper;
-import net.minecraft.entity.boss.EntityWither;
-import net.minecraft.entity.monster.*;
-import net.minecraft.entity.projectile.EntityWitherSkull;
-import net.minecraft.util.DamageSource;
-import net.minecraftforge.event.entity.living.LivingDeathEvent;
-import net.minecraftforge.event.entity.living.LivingDropsEvent;
+import io.savagedev.morestuff.core.handler.ObjHandler;
+import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraftforge.event.world.ExplosionEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-public class EventListener
+public class ExplosionEventListener
 {
-    @SubscribeEvent
-    public void onEntityDrop(LivingDropsEvent event) {
-        double rand = Math.random();
-
-        if(event.getEntityLiving() instanceof EntityWither) {
-            event.getEntityLiving().dropItem(ObjHandler.soulMatter, 3);
-        } else if(event.getEntityLiving() instanceof EntityEnderman) {
-            if (rand < 0.2D && rand > 0.14D) {
-                event.getEntityLiving().dropItem(ObjHandler.soulMatterRaw, 1);
-            }
-        } else if(event.getEntityLiving() instanceof EntitySkeleton) {
-            EntitySkeleton skeleton = (EntitySkeleton) event.getEntityLiving();
-            if(skeleton.getSkeletonType() == SkeletonType.WITHER) {
-                if (rand < 0.2D && rand > 0.16D) {
-                    event.getEntityLiving().dropItem(ObjHandler.soulMatterRaw, 1);
-                }
-            }
-        }
-    }
-
     @SubscribeEvent
     public void onExplosionEvent(ExplosionEvent event) {
         if(event.getExplosion().getExplosivePlacedBy() instanceof EntityCreeper && ((EntityCreeper)event.getExplosion().getExplosivePlacedBy()).getPowered()) {

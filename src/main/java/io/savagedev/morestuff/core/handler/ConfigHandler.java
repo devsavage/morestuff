@@ -27,10 +27,12 @@ import io.savagedev.morestuff.core.Reference;
 import io.savagedev.morestuff.core.config.ConfigValues;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.client.event.ConfigChangedEvent;
+import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import java.io.File;
 
+@Mod.EventBusSubscriber
 public class ConfigHandler
 {
     public static final ConfigHandler instance = new ConfigHandler();

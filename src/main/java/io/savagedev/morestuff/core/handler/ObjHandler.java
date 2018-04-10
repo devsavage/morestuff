@@ -64,6 +64,7 @@ public class ObjHandler
     public static final Item soulMatter = new ItemSoulMatter();
     public static final Item infusionStone = new ItemInfusionStone();
     public static final Item emeraldRod = new ItemEmeraldRod();
+    public static final Item magnet = new ItemMagnet();
 
     public static final Block blockInfuser = new BlockInfuser();
 
@@ -81,6 +82,7 @@ public class ObjHandler
         registerItem(soulMatter, Names.Items.soulMatter);
         registerItem(infusionStone, Names.Items.infusionStone);
         registerItem(emeraldRod, Names.Items.emeraldRod);
+        registerItem(magnet, Names.Items.magnet);
     }
 
     public static void registerBlocks() {
@@ -105,6 +107,7 @@ public class ObjHandler
         registerItemModel(soulMatter, Names.Items.soulMatter);
         registerItemModel(infusionStone, Names.Items.infusionStone);
         registerItemModel(emeraldRod, Names.Items.emeraldRod);
+        registerItemModel(magnet, Names.Items.magnet);
     }
 
     public static void registerBlockModels() {
