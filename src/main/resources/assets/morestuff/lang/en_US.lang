@@ -23,6 +23,10 @@ tile.morestuff:blockInfuser.name=Infuser
 # Container
 container.morestuff:blockInfuser=Infuser
 
+# Keybindings
+key.categories.ms=MoreStuff
+key.ms.flightSpeed=Flight Speed
+
 # Other
 info.morestuff.command.help=The command to help you out with other commands!
 info.morestuff.command.leveltool=Level up your soul tool.

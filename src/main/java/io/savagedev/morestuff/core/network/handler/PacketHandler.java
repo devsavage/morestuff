@@ -1,7 +1,7 @@
-package io.savagedev.morestuff.core.proxy;
+package io.savagedev.morestuff.core.network.handler;
 
 /*
- * CommonProxy.java
+ * PacketHandler.java
  * Copyright (C) 2018 Savage - github.com/devsavage
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,14 +23,22 @@ package io.savagedev.morestuff.core.proxy;
  * THE SOFTWARE.
  */
 
-public class CommonProxy
+import io.savagedev.morestuff.MoreStuff;
+import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
+
+public class PacketHandler
 {
-    public void preInit() {
-        initRenderers();
-        initKeyBindings();
+    public static void sendToServer(IMessage message) {
+        MoreStuff.networkWrapper.sendToServer(message);
     }
 
-    public void initRenderers() {}
+    public static void sendToServer(short packet, TileEntity te, Object... args) {
+        sendToServer(new ServerPacketHandler.MoreStuffMessage(packet, te, args));
+    }
 
-    public void initKeyBindings() {}
+    public static void sendTo(IMessage message, EntityPlayerMP playerMP) {
+        MoreStuff.networkWrapper.sendTo(message, playerMP);
+    }
 }

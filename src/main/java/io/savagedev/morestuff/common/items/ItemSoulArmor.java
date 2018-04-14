@@ -26,28 +26,36 @@ package io.savagedev.morestuff.common.items;
 import io.savagedev.morestuff.MoreStuff;
 import io.savagedev.morestuff.common.items.materials.MaterialSoul;
 import io.savagedev.morestuff.core.Reference;
+import io.savagedev.morestuff.core.config.values.ConfigBooleanValues;
+import io.savagedev.morestuff.core.config.values.ConfigFloatValues;
 import io.savagedev.morestuff.core.handler.ObjHandler;
+import io.savagedev.morestuff.core.helpers.ItemHelper;
 import io.savagedev.morestuff.core.helpers.LogHelper;
+import io.savagedev.morestuff.core.keybindings.IKeyBound;
+import io.savagedev.morestuff.core.keybindings.Key;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.init.MobEffects;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemArmor;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.DamageSource;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraftforge.common.ISpecialArmor;
+import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 
 import java.util.List;
 
-public class ItemSoulArmor extends ItemArmor
+public class ItemSoulArmor extends ItemArmor implements IKeyBound
 {
     private static String[] types = {"helmet", "chest", "legs", "boots"};
-    public static boolean enableAbilities = true;
+
+    private boolean flySpeed = false;
 
     public ItemSoulArmor(EntityEquipmentSlot equipmentSlotIn) {
         super(MaterialSoul.soulArmor, 3, equipmentSlotIn);
@@ -56,47 +64,47 @@ public class ItemSoulArmor extends ItemArmor
         this.setUnlocalizedName(Reference.MOD_DOMAIN + "soulArmor.");
     }
 
-    private void resetArmorAbilities() {
-
+    private void resetArmorAbilities(EntityPlayer player) {
+        if(!player.isCreative() || !player.isSpectator()) {
+            player.capabilities.allowFlying = false;
+            player.capabilities.isFlying = false;
+        }
+        player.stepHeight = 0.0F;
+        player.capabilities.setPlayerWalkSpeed(0.1F);
+        player.removeActivePotionEffect(MobEffects.HEALTH_BOOST);
+        player.sendPlayerAbilities();
     }
 
     @Override
     public void onArmorTick(World world, EntityPlayer player, ItemStack itemStack) {
-        ItemStack helmet = player.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
+        ItemStack helm = player.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
         ItemStack chest = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
-        ItemStack leggings = player.getItemStackFromSlot(EntityEquipmentSlot.LEGS);
+        ItemStack legs = player.getItemStackFromSlot(EntityEquipmentSlot.LEGS);
         ItemStack boots = player.getItemStackFromSlot(EntityEquipmentSlot.FEET);
 
-        if(helmet != null && helmet.getItem() == ObjHandler.soulHelmet) {
-            player.setAir(300);
-        }
+        if(helm != null && chest != null && legs != null && boots != null) {
+            if(helm.getItem() == ObjHandler.soulHelmet && chest.getItem() == ObjHandler.soulChestplate && legs.getItem() == ObjHandler.soulLeggings && boots.getItem() == ObjHandler.soulBoots) {
+                player.setAir(300);
 
-        if(chest != null && chest.getItem() == ObjHandler.soulChestplate || player.capabilities.isCreativeMode || player.isSpectator()) {
-            player.capabilities.allowFlying = true;
-            player.sendPlayerAbilities();
-        } else {
-            player.capabilities.isFlying = false;
-            player.capabilities.allowFlying = false;
-        }
+                if(ConfigBooleanValues.ALLOW_FLIGHT.isEnabled()) {
+                    player.capabilities.allowFlying = true;
+                } else {
+                    player.addPotionEffect(new PotionEffect(MobEffects.HEALTH_BOOST));
+                }
 
-        if(leggings != null && leggings.getItem() == ObjHandler.soulLeggings) {
-            if(!Minecraft.getMinecraft().gameSettings.autoJump) {
-                player.stepHeight = 1.0F;
-            } else {
-                player.capabilities.setPlayerWalkSpeed(0.2F);
+                if(Minecraft.getMinecraft().gameSettings.autoJump) {
+                    player.capabilities.setPlayerWalkSpeed(0.2F);
+                    player.stepHeight = 0.5F;
+                } else {
+                    player.capabilities.setPlayerWalkSpeed(0.1F);
+                    player.stepHeight = 1.0F;
+                }
+
+                player.sendPlayerAbilities();
             }
         } else {
-            player.capabilities.setPlayerWalkSpeed(0.1F);
-            player.stepHeight = 0.5F;
+            resetArmorAbilities(player);
         }
-
-        if(boots != null && boots.getItem() == ObjHandler.soulBoots) {
-            player.fallDistance = 0.0F;
-        } else {
-            player.fallDistance = 0.5F;
-        }
-
-        LogHelper.info(enableAbilities);
     }
 
     @Override
@@ -111,12 +119,17 @@ public class ItemSoulArmor extends ItemArmor
 
         if(this.armorType == EntityEquipmentSlot.CHEST) {
             tooltip.add("- Flying");
-            TextFormatting color = playerIn.capabilities.getFlySpeed() > 0.05F ? TextFormatting.GREEN : TextFormatting.RED;
+            TextFormatting color = flySpeed ? TextFormatting.GREEN : TextFormatting.RED;
             tooltip.add("- Fly Speed: " + color + playerIn.capabilities.getFlySpeed());
         }
 
-        if(this.armorType == EntityEquipmentSlot.LEGS)
-            tooltip.add("- Step Assist");
+        if(this.armorType == EntityEquipmentSlot.LEGS) {
+            if(Minecraft.getMinecraft().gameSettings.autoJump) {
+                tooltip.add("- Speed Boost");
+            } else {
+                tooltip.add("- Step Assist");
+            }
+        }
 
         if(this.armorType == EntityEquipmentSlot.FEET)
             tooltip.add("- No Fall Damage");
@@ -163,5 +176,29 @@ public class ItemSoulArmor extends ItemArmor
     @Override
     public EnumRarity getRarity(ItemStack stack) {
         return EnumRarity.RARE;
+    }
+
+    @Override
+    public void doKeyBindingAction(EntityPlayer player, ItemStack itemStack, Key key) {
+        ItemStack helm = player.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
+        ItemStack chest = player.getItemStackFromSlot(EntityEquipmentSlot.CHEST);
+        ItemStack legs = player.getItemStackFromSlot(EntityEquipmentSlot.LEGS);
+        ItemStack boots = player.getItemStackFromSlot(EntityEquipmentSlot.FEET);
+
+        if(ItemHelper.equalsIgnoreStackSize(itemStack, chest)) {
+            if(key == Key.flightSpeed) {
+                if(boots != null && legs != null && helm != null) {
+                    if(boots.getItem() instanceof ItemSoulArmor && legs.getItem() instanceof ItemSoulArmor && chest.getItem() instanceof ItemSoulArmor && helm.getItem() instanceof ItemSoulArmor) {
+                        if(!flySpeed) {
+                            player.capabilities.setFlySpeed(ConfigFloatValues.KEYBOUND_FLIGHT_SPEED.getValue());
+                            flySpeed = true;
+                        } else {
+                            player.capabilities.setFlySpeed(ConfigFloatValues.DEFAULT_FLIGHT_SPEED.getValue());
+                            flySpeed = false;
+                        }
+                    }
+                }
+            }
+        }
     }
 }

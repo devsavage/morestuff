@@ -1,7 +1,7 @@
-package io.savagedev.morestuff.core.proxy;
+package io.savagedev.morestuff.core.config.values;
 
 /*
- * CommonProxy.java
+ * ConfigBooleanValues.java
  * Copyright (C) 2018 Savage - github.com/devsavage
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,14 +23,28 @@ package io.savagedev.morestuff.core.proxy;
  * THE SOFTWARE.
  */
 
-public class CommonProxy
+import io.savagedev.morestuff.core.config.ConfigCategories;
+
+public enum ConfigBooleanValues
 {
-    public void preInit() {
-        initRenderers();
-        initKeyBindings();
+    ALLOW_FLIGHT("Allow flight", ConfigCategories.ITEMS, true, "Set to false to disable flight with the Soul Matter Chestplate"),
+    DISABLE_MAGNET_SOUND("Disable Magnet Sounds", ConfigCategories.ITEMS, false, "Set this to true to disable the magnet sound.");
+
+    public final String name;
+    public final String category;
+    public final boolean defaultValue;
+    public final String desc;
+
+    public boolean currentValue;
+
+    ConfigBooleanValues(String name, ConfigCategories category, boolean defaultValue, String desc){
+        this.name = name;
+        this.category = category.name;
+        this.defaultValue = defaultValue;
+        this.desc = desc;
     }
 
-    public void initRenderers() {}
-
-    public void initKeyBindings() {}
+    public boolean isEnabled(){
+        return this.currentValue;
+    }
 }

@@ -25,13 +25,14 @@ package io.savagedev.morestuff;
 
 import io.savagedev.morestuff.core.events.ExplosionEventListener;
 import io.savagedev.morestuff.core.events.MobDropsEventListener;
-import io.savagedev.morestuff.core.events.PlayerTickEventListener;
 import io.savagedev.morestuff.core.handler.*;
+import io.savagedev.morestuff.core.keybindings.KeyInputEventHandler;
+import io.savagedev.morestuff.core.network.handler.ServerPacketHandler;
+import io.savagedev.morestuff.core.network.messages.MessageFlightKeyPressed;
 import io.savagedev.morestuff.core.proxy.CommonProxy;
 import io.savagedev.morestuff.core.helpers.LogHelper;
 import io.savagedev.morestuff.core.Reference;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.launchwrapper.Launch;
 import net.minecraftforge.common.MinecraftForge;
@@ -55,6 +56,7 @@ public class MoreStuff
 {
     public static final Logger LOG = LogManager.getLogger(Reference.MOD_ID);
     public static boolean developmentEnvironment = (Boolean) Launch.blackboard.get("fml.deobfuscatedEnvironment");
+    public static SimpleNetworkWrapper networkWrapper = null;
 
     @Mod.Instance(Reference.MOD_ID)
     public static MoreStuff instance;
@@ -74,8 +76,11 @@ public class MoreStuff
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         configDirectory = new File(event.getModConfigurationDirectory(), Reference.MOD_NAME);
-
         ConfigHandler.init(new File(getConfigDirectory(), Reference.MOD_NAME + ".cfg"));
+
+        networkWrapper = new SimpleNetworkWrapper(Reference.MOD_ID);
+        networkWrapper.registerMessage(ServerPacketHandler.class, ServerPacketHandler.MoreStuffMessage.class, 0, Side.SERVER);
+        networkWrapper.registerMessage(MessageFlightKeyPressed.MessageHandler.class, MessageFlightKeyPressed.class, 1, Side.SERVER);
 
         ObjHandler.registerBlocks();
         ObjHandler.registerTileEntities();
@@ -99,12 +104,13 @@ public class MoreStuff
 
         RecipeHandler.init();
 
+        MinecraftForge.EVENT_BUS.register(new KeyInputEventHandler());
+
         LogHelper.info("Initialization Complete");
     }
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
-        MinecraftForge.EVENT_BUS.register(new PlayerTickEventListener());
         LogHelper.info("Post-Initialization Complete");
     }
 

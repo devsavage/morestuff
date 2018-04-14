@@ -75,4 +75,9 @@ public class Names
         public static final String ACTIVE = "Active";
         public static final String SOUND_TIMER = "SoundTimer";
     }
+
+    public static final class Keys {
+        public static final String category = "key.categories.ms";
+        public static final String flightSpeed = "key.ms.flightSpeed";
+    }
 }

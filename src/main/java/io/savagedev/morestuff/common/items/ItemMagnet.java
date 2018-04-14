@@ -25,6 +25,7 @@ package io.savagedev.morestuff.common.items;
 
 import io.savagedev.morestuff.common.items.base.ItemMS;
 import io.savagedev.morestuff.core.Names;
+import io.savagedev.morestuff.core.config.values.ConfigBooleanValues;
 import io.savagedev.morestuff.core.helpers.NBTHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -150,7 +151,7 @@ public class ItemMagnet extends ItemMS
     }
 
     private boolean isAudioDisabled() {
-        return false;
+        return ConfigBooleanValues.DISABLE_MAGNET_SOUND.isEnabled();
     }
 
     private double getManualPullDistance() {

@@ -31,7 +31,7 @@ import io.savagedev.morestuff.common.blocks.infuser.TileEntityInfuser;
 import io.savagedev.morestuff.common.items.*;
 import io.savagedev.morestuff.core.Names;
 import io.savagedev.morestuff.core.Reference;
-import io.savagedev.morestuff.core.config.values.ConfigBlacklist;
+import io.savagedev.morestuff.core.config.values.ConfigBlacklistValues;
 import io.savagedev.morestuff.core.helpers.LogHelper;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.ItemMeshDefinition;
@@ -115,7 +115,7 @@ public class ObjHandler
     }
 
     private static void registerItem(Item item, String name) {
-        if(Arrays.asList(ConfigBlacklist.ITEM_BLACKLIST.getCurrentValues()).contains(name))
+        if(Arrays.asList(ConfigBlacklistValues.ITEM_BLACKLIST.getCurrentValues()).contains(name))
             return;
 
         registerObj(item, name);
@@ -125,14 +125,14 @@ public class ObjHandler
     }
 
     private static void registerTileEntity(Class clazz, String name) {
-        if(Arrays.asList(ConfigBlacklist.BLOCK_BLACKLIST.getCurrentValues()).contains(name))
+        if(Arrays.asList(ConfigBlacklistValues.BLOCK_BLACKLIST.getCurrentValues()).contains(name))
             return;
 
         GameRegistry.registerTileEntity(clazz, Reference.MOD_ID + "." + name);
     }
 
     private static void registerBlock(Block block, ItemBlock itemBlock, String name) {
-        if(Arrays.asList(ConfigBlacklist.BLOCK_BLACKLIST.getCurrentValues()).contains(name))
+        if(Arrays.asList(ConfigBlacklistValues.BLOCK_BLACKLIST.getCurrentValues()).contains(name))
             return;
 
         block.setRegistryName(new ResourceLocation(Reference.MOD_ID, name));
@@ -145,7 +145,7 @@ public class ObjHandler
     }
 
     private static void registerItemModelForAllVariants(Item item, String resourceName, ItemMeshDefinition itemMeshDefinition) {
-        if(Arrays.asList(ConfigBlacklist.ITEM_BLACKLIST.getCurrentValues()).contains(resourceName))
+        if(Arrays.asList(ConfigBlacklistValues.ITEM_BLACKLIST.getCurrentValues()).contains(resourceName))
             return;
 
         resourceName = Reference.MOD_DOMAIN + resourceName;
@@ -156,7 +156,7 @@ public class ObjHandler
     }
 
     private static void registerItemModel(Item item, String resourceName) {
-        if(Arrays.asList(ConfigBlacklist.ITEM_BLACKLIST.getCurrentValues()).contains(resourceName))
+        if(Arrays.asList(ConfigBlacklistValues.ITEM_BLACKLIST.getCurrentValues()).contains(resourceName))
             return;
 
         registerItemModel(item, resourceName, 0, false);
@@ -173,7 +173,7 @@ public class ObjHandler
     }
 
     private static void registerBlockModel(Block block, String resourceName) {
-        if(Arrays.asList(ConfigBlacklist.BLOCK_BLACKLIST.getCurrentValues()).contains(resourceName))
+        if(Arrays.asList(ConfigBlacklistValues.BLOCK_BLACKLIST.getCurrentValues()).contains(resourceName))
             return;
 
         ResourceLocation resourceLocation = new ResourceLocation(Reference.MOD_DOMAIN + resourceName);

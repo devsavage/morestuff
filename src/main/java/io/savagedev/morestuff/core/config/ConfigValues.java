@@ -23,16 +23,28 @@ package io.savagedev.morestuff.core.config;
  * THE SOFTWARE.
  */
 
-import io.savagedev.morestuff.core.config.values.ConfigBlacklist;
+import io.savagedev.morestuff.core.config.values.ConfigBlacklistValues;
+import io.savagedev.morestuff.core.config.values.ConfigBooleanValues;
+import io.savagedev.morestuff.core.config.values.ConfigFloatValues;
 import net.minecraftforge.common.config.Configuration;
 
 public class ConfigValues
 {
-    public static ConfigBlacklist[] blacklistConfig = ConfigBlacklist.values();
+    public static ConfigBlacklistValues[] blacklistConfig = ConfigBlacklistValues.values();
+    public static ConfigBooleanValues[] booleanConfig = ConfigBooleanValues.values();
+    public static ConfigFloatValues[] floatConfig = ConfigFloatValues.values();
 
     public static void initConfigValues(Configuration config) {
-        for(ConfigBlacklist currentConf : blacklistConfig) {
+        for(ConfigBlacklistValues currentConf : blacklistConfig) {
             currentConf.currentValues = config.getStringList(currentConf.name, currentConf.category, currentConf.defaultValues, currentConf.desc);
+        }
+
+        for(ConfigBooleanValues currentConf : booleanConfig) {
+            currentConf.currentValue = config.getBoolean(currentConf.name, currentConf.category, currentConf.defaultValue, currentConf.desc);
+        }
+
+        for(ConfigFloatValues currentConf : floatConfig) {
+            currentConf.currentValue = config.getFloat(currentConf.name, currentConf.category, currentConf.defaultValue, currentConf.min, currentConf.max, currentConf.desc);
         }
     }
 

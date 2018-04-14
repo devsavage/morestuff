@@ -1,7 +1,7 @@
-package io.savagedev.morestuff.core.proxy;
+package io.savagedev.morestuff.core.config.values;
 
 /*
- * CommonProxy.java
+ * ConfigBlacklistValues.java
  * Copyright (C) 2018 Savage - github.com/devsavage
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,14 +23,28 @@ package io.savagedev.morestuff.core.proxy;
  * THE SOFTWARE.
  */
 
-public class CommonProxy
+import io.savagedev.morestuff.core.config.ConfigCategories;
+
+public enum ConfigBlacklistValues
 {
-    public void preInit() {
-        initRenderers();
-        initKeyBindings();
+    ITEM_BLACKLIST("Item Blacklist", ConfigCategories.BLACKLIST, new String[0], "Disable items from being registered."),
+    BLOCK_BLACKLIST("Block Blacklist", ConfigCategories.BLACKLIST, new String[0], "Disable blocks from being registered.");
+
+    public final String name;
+    public final String category;
+    public final String[] defaultValues;
+    public final String desc;
+
+    public String[] currentValues;
+
+    ConfigBlacklistValues(String name, ConfigCategories category, String[] defaultValues, String desc){
+        this.name = name;
+        this.category = category.name;
+        this.defaultValues = defaultValues;
+        this.desc = desc;
     }
 
-    public void initRenderers() {}
-
-    public void initKeyBindings() {}
+    public String[] getCurrentValues() {
+        return this.currentValues;
+    }
 }

@@ -24,6 +24,8 @@ package io.savagedev.morestuff.core.proxy;
  */
 
 import io.savagedev.morestuff.core.handler.ObjHandler;
+import io.savagedev.morestuff.core.keybindings.KeyBindings;
+import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -36,5 +38,11 @@ public class ClientProxy extends CommonProxy
 
         ObjHandler.registerBlockModels();
         ObjHandler.registerItemModels();
+    }
+
+    @Override
+    public void initKeyBindings() {
+        super.initKeyBindings();
+        ClientRegistry.registerKeyBinding(KeyBindings.flightSpeed);
     }
 }

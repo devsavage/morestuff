@@ -1,7 +1,7 @@
 package io.savagedev.morestuff.core.config.values;
 
 /*
- * ConfigBlacklist.java
+ * ConfigFloatValues.java
  * Copyright (C) 2018 Savage - github.com/devsavage
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -25,26 +25,30 @@ package io.savagedev.morestuff.core.config.values;
 
 import io.savagedev.morestuff.core.config.ConfigCategories;
 
-public enum ConfigBlacklist
+public enum ConfigFloatValues
 {
-    ITEM_BLACKLIST("Item Blacklist", ConfigCategories.BLACKLIST, new String[0], "Disable items from being registered."),
-    BLOCK_BLACKLIST("Block Blacklist", ConfigCategories.BLACKLIST, new String[0], "Disable blocks from being registered.");
+    DEFAULT_FLIGHT_SPEED("Default Flight Speed", ConfigCategories.ITEMS, 0.05F, 0.01F, 0.5F, "Set the base flight speed for the Soul Matter Chestplate"),
+    KEYBOUND_FLIGHT_SPEED("Keybound Flight Speed", ConfigCategories.ITEMS, 0.10F, 0.06F, 0.15F, "Set the flight speed when the flight speed keybind is pressed.");
 
     public final String name;
     public final String category;
-    public final String[] defaultValues;
+    public final float defaultValue;
+    public final float min;
+    public final float max;
     public final String desc;
 
-    public String[] currentValues;
+    public float currentValue;
 
-    ConfigBlacklist(String name, ConfigCategories category, String[] defaultValues, String desc){
+    ConfigFloatValues(String name, ConfigCategories category, float defaultValue, float min, float max, String desc) {
         this.name = name;
         this.category = category.name;
-        this.defaultValues = defaultValues;
+        this.defaultValue = defaultValue;
+        this.min = min;
+        this.max = max;
         this.desc = desc;
     }
 
-    public String[] getCurrentValues() {
-        return this.currentValues;
+    public float getValue() {
+        return this.currentValue;
     }
 }

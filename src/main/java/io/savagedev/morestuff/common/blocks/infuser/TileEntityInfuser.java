@@ -383,9 +383,6 @@ public class TileEntityInfuser extends TileEntityMS implements IInventory, ITick
         if (compound.hasKey(Names.NBT.CUSTOM_NAME, 8)) {
             this.customName = compound.getString(Names.NBT.CUSTOM_NAME);
         }
-
-        LogHelper.info("Read: " + compound.toString());
-        LogHelper.info("Read: " + compound.getInteger(Names.NBT.TOTAL_FUEL_STORED));
     }
 
     @Override
@@ -412,8 +409,6 @@ public class TileEntityInfuser extends TileEntityMS implements IInventory, ITick
         if (this.hasCustomName()) {
             compound.setString(Names.NBT.CUSTOM_NAME, this.customName);
         }
-
-        LogHelper.info("Write: " + compound.toString());
 
         return compound;
     }

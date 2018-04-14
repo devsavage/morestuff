@@ -1,7 +1,7 @@
-package io.savagedev.morestuff.core.proxy;
+package io.savagedev.morestuff.core.keybindings;
 
 /*
- * CommonProxy.java
+ * KeyBindings.java
  * Copyright (C) 2018 Savage - github.com/devsavage
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,14 +23,14 @@ package io.savagedev.morestuff.core.proxy;
  * THE SOFTWARE.
  */
 
-public class CommonProxy
+import io.savagedev.morestuff.core.Names;
+import net.minecraft.client.settings.KeyBinding;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+import org.lwjgl.input.Keyboard;
+
+@SideOnly(Side.CLIENT)
+public class KeyBindings
 {
-    public void preInit() {
-        initRenderers();
-        initKeyBindings();
-    }
-
-    public void initRenderers() {}
-
-    public void initKeyBindings() {}
+    public static KeyBinding flightSpeed = new KeyBinding(Names.Keys.flightSpeed, Keyboard.KEY_LMENU, Names.Keys.category);
 }

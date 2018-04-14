@@ -1,7 +1,7 @@
-package io.savagedev.morestuff.core.events;
+package io.savagedev.morestuff.core.keybindings;
 
 /*
- * PlayerTickEventListener.java
+ * Key.java
  * Copyright (C) 2018 Savage - github.com/devsavage
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
@@ -23,13 +23,13 @@ package io.savagedev.morestuff.core.events;
  * THE SOFTWARE.
  */
 
-import io.savagedev.morestuff.common.items.ItemSoulArmor;
-import io.savagedev.morestuff.core.helpers.LogHelper;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.PlayerEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
-
-public class PlayerTickEventListener
+public enum  Key
 {
-    // FIX ARMOR BUG HERE
+    unknown, flightSpeed;
+
+    public static final Key[] KEYS = Key.values();
+
+    public static Key getKey(byte ordinal) {
+        return KEYS[ordinal % KEYS.length];
+    }
 }
